@@ -21,3 +21,9 @@
 
  - **Name:** [黃翊逢](https://blup712019.github.io/)
  - **Student ID:** 1123301
+## Repo description
+ - **Course repo purpose:**
+  - 紀錄課程內容，筆記講義等，協助自己學習並留下自己的學習紀錄
+  - 放置作業程式碼，以及自己的程式練習
+  - 幫助自己熟悉使用github，體驗實際開發的工作流程
+  - 為未來的推甄/面試留下過往的學習紀錄 
