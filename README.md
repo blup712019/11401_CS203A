@@ -6,11 +6,11 @@
 - **Duration:** 18 Weeks (including Midterm and Final exams)
 - **Semester:** 11401
 - **Credits:** 3
-- **Instructor:** [Yu-Feng Huang] (mailto:yfhuang@saturn.yzu.edu.tw) 
+- **Instructor:** Yu-Feng Huang
 - **Course Time(Classroom):**
   - Monday 09:10–10:00 (R60104)
   - Tuesday 15:10–17:00 (R1102)
-- **Contact:** Yu-Feng Huang
+- **Contact:** [Yu-Feng Huang](mailto:yfhuang@saturn.yzu.edu.tw)  
 - **Teaching Assistant:** To be announced
 - **Office Hours:**
   - Monday 14:00–16:00 (R1310)
