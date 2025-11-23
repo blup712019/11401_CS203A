@@ -18,7 +18,19 @@
 #include <stdexcept>
 #define A 2654435761ULL //使用Knuth multiplicative constant
 
-
+/**
+ * @brief Computes the hash index for an integer key by using multiplicative hashing.
+ *
+ * This function is applied by Knuth's multiplicative hashing method:
+ *      h(k) = (A * k) mod m
+ * where A = 2654435761
+ *
+ * @param key  Key to be hashed.
+ * @param m    The hash table size. Must > 0.
+ * @return     The computed hash index in the range [0, m - 1].
+ *
+ * @throws std::invalid_argument if m <= 0.
+ */
 int myHashInt(int key, int m) {
     if (m <= 0) { //避免不合法的table size
         throw std::invalid_argument("Table size m must be > 0");
@@ -30,6 +42,21 @@ int myHashInt(int key, int m) {
     return static_cast<int>(hash % static_cast<unsigned long long>(m));  // 安全轉型
 }
 
+
+/**
+ * @brief Computes the hash index for a string key using additive + multiplicative hashing.
+ *
+ * The function first accumulates the sum of all character codes in the string,
+ * then applies the same multiplicative constant A:
+ *      h(str) = ( sum(str[i]) * A ) mod m
+ * This helps spread string keys more uniformly across the table.
+ *
+ * @param str  The string key to be hashed. Must not be empty.
+ * @param m    The hash table size. Must > 0.
+ * @return     The computed hash index in the range [0, m - 1].
+ *
+ * @throws std::invalid_argument if m <= 0 or str is empty.
+ */
 int myHashString(const std::string& str, int m) {
     if (m <= 0) {//避免不合法的table size
         throw std::invalid_argument("Table size m must be > 0");
