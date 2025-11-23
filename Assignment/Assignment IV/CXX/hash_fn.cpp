@@ -15,7 +15,8 @@
 #include "hash_fn.hpp"
 #define INF 4000000000
 int myHashInt(int key, int m) {
-    return key % m;  // 線性作法
+    unsigned long hash = (key*key) % INF;
+    return hash % m;  // 將key^2 取餘得到位置
 }
 
 int myHashString(const std::string& str, int m) {
@@ -23,5 +24,6 @@ int myHashString(const std::string& str, int m) {
     for(auto i: str){   //直接把每個字元轉數字 加總當作key
         hash = (hash +(int)i) % INF; //避免整數溢位
     }
-    return static_cast<int>(hash % m);  // basic division method
+    hash = (hash*hash) % INF;
+    return static_cast<int>(hash % m);  // 將key^2 取餘得到位置
 }
