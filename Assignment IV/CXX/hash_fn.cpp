@@ -8,18 +8,20 @@
 
    Development History:
     - 2025/11/23: Initialization
+    - 2025/11/23: Added string-hash implementation
 
    Developer: YI-FENG HUANG <s1123301@mail.yzu.edu.tw>
  */
 #include "hash_fn.hpp"
-
+#define INF 4000000000
 int myHashInt(int key, int m) {
-    // TODO: replace with your own design
-    return key % m;  // basic division method
+    return key % m;  // 線性作法
 }
 
 int myHashString(const std::string& str, int m) {
     unsigned long hash = 0;
-    // TODO: replace with your own design
+    for(auto i: str){   //直接把每個字元轉數字 加總當作key
+        hash = (hash +(int)i) % INF; //避免整數溢位
+    }
     return static_cast<int>(hash % m);  // basic division method
 }
