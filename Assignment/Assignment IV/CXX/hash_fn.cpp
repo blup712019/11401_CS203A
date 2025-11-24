@@ -16,7 +16,7 @@
  */
 #include "hash_fn.hpp"
 #include <stdexcept>
-#define A 2654435761ULL //使用Knuth multiplicative constant
+#define A 2654435761ULL // 使用Knuth multiplicative constant
 
 /**
  * @brief Computes the hash index for an integer key by using multiplicative hashing.
@@ -32,13 +32,13 @@
  * @throws std::invalid_argument if m <= 0.
  */
 int myHashInt(int key, int m) {
-    if (m <= 0) { //避免不合法的table size
+    if (m <= 0) { // 避免不合法的table size
         throw std::invalid_argument("Table size m must be > 0");
     }
 
 
     unsigned long long hash = static_cast<unsigned long long>(key); 
-    hash = hash * A; //乘以A來達到發散的效果
+    hash = hash * A; // 乘以A來達到發散的效果
     return static_cast<int>(hash % static_cast<unsigned long long>(m));  // 安全轉型
 }
 
@@ -67,9 +67,9 @@ int myHashString(const std::string& str, int m) {
 
 
     unsigned long long hash = 0;
-    for(auto i: str){   //直接把每個字元轉數字 加總當作key
+    for(auto i: str){   // 直接把每個字元轉數字 加總當作key
         hash = hash +static_cast<int>(i);
     }
-    hash = hash * A; //乘以A來達到發散的效果
+    hash = hash * A; // 乘以A來達到發散的效果
     return static_cast<int>(hash % static_cast<unsigned long long>(m));  // 安全轉型
 }

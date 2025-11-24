@@ -1,22 +1,18 @@
 # Homework Assignment IV: Hash Function Design & Observation (C/C++ Version)
 
-This assignment focuses on the design and observation of hash functions using C/C++. 
-Students are expected to implement and analyze the behavior of hash functions, 
-evaluate their efficiency, and understand their applications in computer science.
-
-Developer: [Your Name]  
-Email: [Your email]  
+Developer: YI-FENG HUANG
+Email: Blup712019@gmail.com 
 
 ## My Hash Function
 ### Integer Keys 
-- Formula / pseudocode:
+- pseudocode:
   ```text
   [Your implementation here]
   ```
 - Rationale: [Explain your design choices and how they minimize collisions.]
 
 ### Non-integer Keys
-- Formula / pseudocode:
+- pseudocode:
   ```text
   [Your implementation here]
   ```
