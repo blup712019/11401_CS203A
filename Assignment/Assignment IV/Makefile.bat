@@ -18,6 +18,10 @@ set CXX_SRCS=CXX\main.cpp CXX\hash_fn.cpp
 set CXX_OBJS=CXX\main.o CXX\hash_fn.o
 set CXX_BIN=CXX\hash_function_cpp.exe
 
+set CXX2_SRCS=CXX\main2.cpp CXX\hash_fn2.cpp
+set CXX2_OBJS=CXX\main2.o CXX\hash_fn2.o
+set CXX2_BIN=CXX\hash_function_cpp2.exe
+
 if "%1"=="" goto all
 if "%1"=="all" goto all
 if "%1"=="c" goto c
@@ -42,6 +46,9 @@ echo Building C++ version...
 %CXX% %CXXFLAGS% -c CXX\main.cpp -o CXX\main.o
 %CXX% %CXXFLAGS% -c CXX\hash_fn.cpp -o CXX\hash_fn.o
 %CXX% %CXXFLAGS% -o %CXX_BIN% %CXX_OBJS%
+%CXX% %CXXFLAGS% -c CXX\main2.cpp -o CXX\main2.o
+%CXX% %CXXFLAGS% -c CXX\hash_fn2.cpp -o CXX\hash_fn2.o
+%CXX% %CXXFLAGS% -o %CXX2_BIN% %CXX2_OBJS%
 goto end
 
 :clean
