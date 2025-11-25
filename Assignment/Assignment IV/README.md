@@ -16,7 +16,11 @@ The compiler versions used in this project are:
 ## Hash Function Design and Pseudocode
 In this project I implemented two different hash function for both integer keys and string keys to compare their performance in terms of collision rate and distribution uniformity:
 1. Design A – Multiplicative hashing (Knuth’s method)
+
+
 2. Design B – Squared hashing (hash^2 mod m)
+
+
 Both designs share the same overall goal:
 - mapping keys into the range [0, m - 1],
 - reduce clustering patterns,
