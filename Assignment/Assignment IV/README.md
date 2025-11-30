@@ -1,6 +1,8 @@
 # Homework Assignment IV: Hash Function Design & Observation (C/C++ Version)
 
 Developer: YI-FENG HUANG
+
+
 Email: Blup712019@gmail.com 
 ## Environment
 This project is developed and executed on a Windows environment using the MinGW-W64 toolchain to compile both C and C++ implementations.
@@ -42,7 +44,6 @@ function myHashInt(int key,int m)
   index = hash mod m
 
   return index
-
   ```
 #### Rationale
 This design multiplies the key by Knuth’s constant A = 2654435761 to spread nearby keys apart before applying mod m.
@@ -74,7 +75,6 @@ The idea is to:
     index = hash mod m
 
     return int(index)
-
 ```
 #### Rationale
 The string is first reduced to a numeric value by summing character codes.Then multiplies the results by Knuth’s constant A = 2654435761 to spread nearby keys apart before applying mod m.
@@ -99,7 +99,6 @@ function myHashInt(int key,int m)
   index = hash mod m
 
   return index
-
   ```
 #### Rationale
 This method uses h(k) = k² mod m to introduce a nonlinear transformation.
@@ -129,7 +128,6 @@ The key idea is:
     index = hash mod m
 
     return int(index)
-
 ```
 #### Rationale
 The string is first reduced to a numeric value by summing character codes.Then use h(k) = k² mod m to introduce a nonlinear transformation.
@@ -137,3 +135,21 @@ The key idea is:
 - first reduce the string to a single numeric value
 - second amplify the difference between keys by squaring them (k^2),
 - then apply mod m to map them into the table.
+
+## Experimental Setup
+This project evaluates the behavior of two hash function designs under different table sizes and datasets.
+### Table Sizes Tested (m)
+#### - 10
+#### - 11 (prime number)
+#### - 37 (prime number)
+### Test Dataset
+#### Integer Keys
+```test
+21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+51, 52, 53, 54, 55, 56, 57, 58, 59, 60
+```
+#### String Keys
+```test
+"cat", "dog", "bat", "cow", "ant",
+"owl", "bee", "hen", "pig", "fox"
+```
