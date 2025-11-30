@@ -18,8 +18,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-
-#define A 2654435761ULL // 使用 Knuth multiplicative constant 
+// 使用Knuth multiplicative constant
+#define A 2654435761ULL
 
 /**
  * @brief Computes the hash index for an integer key by using multiplicative hashing.

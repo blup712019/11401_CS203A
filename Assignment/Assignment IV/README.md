@@ -220,11 +220,6 @@ Makefile.bat c
 # Build only C++ version
 Makefile.bat cxx
 ```
-### Clean Build Files
-Remove all compiled files:
-```bash
-Makefile.bat clean
-```
 ### Execution
 After building, the executables appear inside the C or CXX directories.
 ```bash
@@ -236,6 +231,11 @@ CXX\hash_function_cpp.exe
 
 # Run C++ version (squared hashing)
 CXX\hash_function_cpp2.exe
+```
+### Clean Build Files
+Remove all compiled files:
+```bash
+Makefile.bat clean
 ```
 ### Result Snapshot
 This section shows creenshots of the program output for both hash function designs:
@@ -335,5 +335,16 @@ Both methods benefit from increasing table size, but multiplicative hashing is m
 - With m = 37, multiplicative hashing achieves near-uniform distribution for both integers and strings.
 - Squared hashing also improves with a larger table size; however, its integer index distribution, while appearing more “random” at first glance, is still not evenly spread, certain index values appear more frequently, leading to subtle clustering and an uneven distribution across the table.
 - This shows that table size and hash function design must be considered together, since a larger m alone cannot fully compensate for structural weaknesses in the hashing method.
+
+### 6. Overall
+- Combining all observations, the multiplicative method is more reliable spreading and fewer collisions.
+- The squared hashing method, while inspired by cryptographic concepts, introduces predictable patterns unsuitable for general hash table applications.
+- In addition, the experiments clearly show that the choice of table size is just as important as the choice of hashing method.
+  - Prime table sizes (m = 11 and m = 37) consistently produce more uniform index distributions, reduce repeating cycles, and improve collision resistance for both hashing approaches. Larger table sizes further smooth out the distribution.
   
 ## Reflection
+- ### Understanding how hash function design influences collision behavior
+  Through the experiment, I realized that the structure of a hash function directly determines its collision behavior.<br>
+  Multiplicative hashing, which applies by multiplying keys with Knuth multiplicative constant, successfully breaks the linearity of integer sequences and disperses ASCII-sum–based string inputs.<br> 
+  In contrast, the squared hashing method, although theoretically related to randomness in cryptographic systems, preserves structural patterns in the input. The symmetric nature of k² mod m leads to repeated residues, causing secondary clustering even when the index values appear “random.”<br>
+  This makes it clear that mathematical complexity does not guarantee practical hash quality, and the internal structure of the function must be designed specifically for uniform distribution.

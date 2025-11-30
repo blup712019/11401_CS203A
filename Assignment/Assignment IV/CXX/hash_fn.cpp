@@ -16,7 +16,8 @@
  */
 #include "hash_fn.hpp"
 #include <stdexcept>
-#define A 2654435761ULL // 使用Knuth multiplicative constant
+// 使用Knuth multiplicative constant
+#define A 2654435761ULL 
 
 /**
  * @brief Computes the hash index for an integer key by using multiplicative hashing.
