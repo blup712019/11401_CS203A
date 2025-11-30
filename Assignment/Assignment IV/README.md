@@ -343,8 +343,29 @@ Both methods benefit from increasing table size, but multiplicative hashing is m
   - Prime table sizes (m = 11 and m = 37) consistently produce more uniform index distributions, reduce repeating cycles, and improve collision resistance for both hashing approaches. Larger table sizes further smooth out the distribution.
   
 ## Reflection
-- ### Understanding how hash function design influences collision behavior
-  Through the experiment, I realized that the structure of a hash function directly determines its collision behavior.<br>
-  Multiplicative hashing, which applies by multiplying keys with Knuth multiplicative constant, successfully breaks the linearity of integer sequences and disperses ASCII-sum–based string inputs.<br> 
-  In contrast, the squared hashing method, although theoretically related to randomness in cryptographic systems, preserves structural patterns in the input. The symmetric nature of k² mod m leads to repeated residues, causing secondary clustering even when the index values appear “random.”<br>
-  This makes it clear that mathematical complexity does not guarantee practical hash quality, and the internal structure of the function must be designed specifically for uniform distribution.
+### 1. Understanding how hash function design influences collision behavior
+  - Through the experiment, I realized that the structure of a hash function directly determines its collision behavior.<br>
+  - Multiplicative hashing, which applies by multiplying keys with Knuth multiplicative constant, successfully breaks the linearity of integer sequences and disperses ASCII-sum–based string inputs.<br> 
+  - In contrast, the squared hashing method, although theoretically related to randomness in cryptographic systems, preserves structural patterns in the input. The symmetric nature of k^2 mod m leads to repeated residues, causing secondary clustering even when the index values appear “random.”<br>
+  - This shows that there is often a clear gap between theoretical expectations and practical outcomes.
+### 2. Importance of choosing an appropriate table size
+Before doing this project, I did not fully appreciate how much table size affects distribution quality.
+
+
+Testing with m = 10, m = 11, and m = 37 demonstrated a strong contrast:
+  - The non-prime size (m = 10) introduced repeating cycles and highly predictable collisions in both hash methods.
+  - Prime sizes (m = 11 and especially m = 37) produced noticeably smoother and more evenly spaced results.
+
+
+Even squared hashing improved slightly when using a larger prime table size, though it continued to suffer from clustering.<br>
+This shows that a hash function cannot be evaluated without considering its table size, and prime numbers are an essential design choice for minimizing modular artifacts.
+### 3. Thinking About How to Design a Good Hash Function
+This project helped me understand the key principles behind designing an effective hash function.
+A good hash function should break input patterns, spread similar keys apart, and avoid producing repeated or symmetric outputs. In my results, multiplicative hashing achieved this by applying strong mixing, while the squared method preserved structural relationships, leading to clustering.
+
+
+The experiment also showed that a good design must be paired with an appropriate table size.
+Prime values of m significantly reduced cycles and produced more uniform distributions, whereas non-prime m = 10 amplified collisions.
+
+
+Overall, designing a good hash function requires balancing mixing strength, input characteristics, and table size selection. Effective mixing reduces collisions, while poor transformations, such as symmetric squaring, can increase them even if the method appears “random” in theory.
