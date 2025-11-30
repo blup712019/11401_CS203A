@@ -9,6 +9,12 @@ Before starting, ensure you have the following:
 - **Git for Windows (includes Git Bash) [Download Git here](https://git-scm.com/).**
 - **A GitHub account**
 
+## Environment
+- **Operating System:** Windows 11
+- **VSCode Version:** 1.106.3
+- **Git for Windows Version:** 2.52.0.windows.1
+
+
 ## Steps to Connect to GitHub
 
 1. **Install the GitHub Extension for VSCode**
@@ -46,6 +52,11 @@ git config --global user.email "your_email@example.com"
 
 ## Additional Tips
 - Use the built-in terminal in VSCode for advanced Git commands.
-- Enable GitLens extension for enhanced Git insights.
+- Install GitLens for enhanced commit history and code tracing.
+- If push fails, common reasons include:
+  - GitHub authentication expired
+  - You need to pull first
+  - No write permission on the repository
+  - Git not properly installed
 
 By following these steps, you can easily connect and manage your GitHub repositories using Visual Studio Code.
