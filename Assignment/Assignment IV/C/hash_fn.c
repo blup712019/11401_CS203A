@@ -19,7 +19,7 @@
 #include <string.h>
 #include <errno.h>
 
-#define A 2654435761ULL /* 使用 Knuth multiplicative constant */
+#define A 2654435761ULL // 使用 Knuth multiplicative constant 
 
 /**
  * @brief Computes the hash index for an integer key by using multiplicative hashing.
@@ -77,13 +77,13 @@
  */
 
 int myHashString(const char *str, int m) {
-    if (m <= 0) { /* 避免不合法的 table size */
+    if (m <= 0) { // 避免不合法的 table size 
         fprintf(stderr, "myHashString error: table size m must be > 0\n");
         errno = EINVAL;
         return -1;
     }
 
-    if (str == NULL || str[0] == '\0') { /* 避免 NULL 或空字串 */
+    if (str == NULL || str[0] == '\0') { // 避免 NULL 或空字串 
         fprintf(stderr, "myHashString error: string must not be NULL or empty\n");
         errno = EINVAL;
         return -1;

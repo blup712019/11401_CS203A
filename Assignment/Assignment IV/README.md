@@ -26,3 +26,26 @@ Both designs share the same overall goal:
 - reduce clustering patterns,
 - and make it easier to compare how table size m affects the distribution of indices in different design.
 ### Design A: Multiplicative Hashing (Knuth’s Method)
+Pseudocode of Integer Keys
+```text
+function myHashInt(int key,int m)
+  if m <= 0 then
+      return error "Table size m must be > 0"
+  end if
+
+  const A = 2654435761  // Knuth's multiplicative constant
+
+  unsigned long long hash = key;
+
+  hash = hash * A 
+
+  index = hash mod m
+
+  return index
+
+  ```
+#### Rationale
+This design multiplies the key by Knuth’s constant A = 2654435761 to spread nearby keys apart before applying mod m.
+The idea is to:
+- first spread nearby keys apart by multiplying with a large odd constant,
+- then fold the result back into [0, m - 1] via mod m.
