@@ -85,3 +85,55 @@ The idea is to:
 
 ### Design B: Squared Hashing
 This second design modifies the previous idea by applying a square operation before taking mod m. The goal is to see how an additional non-linear step affects the distribution.
+### Pseudocode of Integer Keys
+```text
+function myHashInt(int key,int m)
+  if m <= 0 then
+      return error "Table size m must be > 0"
+  end if
+
+  unsigned long long hash = key;
+
+  hash = hash * hash 
+
+  index = hash mod m
+
+  return index
+
+  ```
+#### Rationale
+This method uses h(k) = k² mod m to introduce a nonlinear transformation.
+The key idea is:
+- amplify the difference between keys by squaring them (k^2),
+- then apply mod m to map them into the table.
+
+### Pseudocode of String Keys
+```text
+  function myHashString(string key,int m)
+    if m <= 0 then
+        raise error "Table size m must be > 0"
+    end if
+
+    if str is empty then
+        raise error "String size must be > 0"
+    end if
+
+    unsigned hash = 0
+
+    for each character ch in str do
+        hash = hash + int(ch)  
+    end for
+
+    hash = hash * hash
+
+    index = hash mod m
+
+    return int(index)
+
+```
+#### Rationale
+The string is first reduced to a numeric value by summing character codes.Then use h(k) = k² mod m to introduce a nonlinear transformation.
+The key idea is:
+- first reduce the string to a single numeric value
+- second amplify the difference between keys by squaring them (k^2),
+- then apply mod m to map them into the table.
