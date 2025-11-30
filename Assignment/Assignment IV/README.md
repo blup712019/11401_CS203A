@@ -258,3 +258,49 @@ This section shows creenshots of the program output for both hash function desig
 #### String Output（screenshot） :
 | <img src="./Images/ST4.png" width="300"/> | <img src="./Images/ST5.png" width="320"/> |<img src="./Images/ST6.png" width="325"/> |
 
+- Method 1 — Multiplicative Hashing
+  - Example output for integers:
+  ```bash
+  Hash table (m=10): [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 
+                      1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+
+  Hash table (m=11): [1, 0, 10, 9, 8, 7, 6, 5, 4, 3,
+                      4, 3, 2, 1, 0, 10, 9, 8, 7, 6]
+
+  Hash table (m=37): [5, 7, 9, 11, 13, 15, 17, 19, 21, 23,
+                      28, 30, 32, 34, 36, 1, 3, 5, 7, 9]
+  ```
+  - Example output for strings:
+  ```bash
+  Hash table (m=10): [2, 4, 1, 9, 3, 8, 0, 5, 0, 3]
+
+  Hash table (m=11): [7, 5, 8, 1, 7, 3, 8, 4, 10, 8]
+
+  Hash table (m=37): [32, 36, 30, 29, 17, 10, 8, 1, 11, 0]
+  ```
+- Method 2 — Squared Hashing
+  - Example output for integers:
+  ```bash
+  Hash table (m=10): [1, 4, 9, 6, 5, 6, 9, 4, 1, 0,
+                      1, 4, 9, 6, 5, 6, 9, 4, 1, 0]
+
+  Hash table (m=11): [1, 0, 1, 4, 9, 5, 3, 3, 5, 9,
+                      5, 9, 4, 1, 0, 1, 4, 9, 5, 3]
+
+  Hash table (m=37): [34, 3, 11, 21, 33, 10, 26, 7, 27, 12,
+                      11, 3, 34, 30, 28, 28, 30, 34, 3, 11]
+
+  ```
+  - Example output for strings:
+  ```bash
+  Hash table (m=10): [4, 6, 1, 1, 9, 4, 0, 5, 0, 9]
+
+  Hash table (m=11): [5, 3, 9, 1, 5, 9, 9, 5, 1, 9]
+
+  Hash table (m=37): [34, 28, 3, 16, 26, 25, 16, 28, 21, 0]
+  ```
+
+- Observations :
+  - Prime table sizes (m = 11 and m = 37) provide noticeably better distribution and fewer collisions compared to the non-prime size (m = 10).
+  - Multiplicative hashing produces more uniform and predictable index sequences, especially for larger prime table sizes.
+  - Squared hashing (k² mod m) shows repeating or symmetric patterns, resulting in more Secondary Clustering.
