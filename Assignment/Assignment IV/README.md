@@ -304,3 +304,36 @@ This section shows creenshots of the program output for both hash function desig
   - Prime table sizes (m = 11 and m = 37) provide noticeably better distribution and fewer collisions compared to the non-prime size (m = 10).
   - Multiplicative hashing produces more uniform and predictable index sequences, especially for larger prime table sizes.
   - Squared hashing (k² mod m) shows repeating or symmetric patterns, resulting in more Secondary Clustering.
+
+## Analysis
+### 1. Effect of Prime vs. Non-Prime Table Sizes
+- Table size plays a critical role in hash distribution.
+- The non-prime size (m = 10) consistently produced repeating cycles and collision clusters, especially when the hash function generated structured output sequences.
+- Prime table sizes (m = 11 and m = 37) reduced these modular problems, resulting in cleaner, more uniform index spreading across both hashing methods
+### 2. Integer Key Behavior Across Hash Functions
+- Integer inputs (21–30, 51–60) are highly linear, making them ideal for observing how the hashing method transforms predictable sequences.
+- Multiplicative hashing effectively breaks linearity and spreads values more evenly.
+- Squared hashing, however, leds many symmetric relationships, which leads to Secondary Clustering.
+
+### 3. String Key Behavior and ASCII-Sum
+- String keys are first converted into ASCII-sum integers, which causes many words to fall within similar numeric ranges.
+- Multiplicative hashing mixes these values well and reduces collisions, producing consistently smooth distributions.
+- Squared hashing amplifies similarity among ASCII sums and often maps different strings to identical squared residues, resulting in more collisions.
+
+### 4. Comparison Between Two Hashing Methods
+The two methods show different characteristics:
+- Multiplicative hashing
+  - The approach uses Knuth-style multiplicative mixing, providing good diffusion and low collision rates.
+  - This method originates from concepts covered in previous programming courses and further refined based on references such as: https://gist.github.com/badboy/6267743
+- Squared hashing
+  - This approach was inspired by ideas from cryptographic algorithms studied in RSA and Blum Blum Shub, these algorithms use repeated squaring and modular arithmetic to produce pseudo-random values.
+  - Although the idea was inspired by the randomization concepts in RSA and Blum Blum Shub—suggesting that repeated squaring and modular reduction might introduce randomness and help reduce collisions, the experimental results show that this approach does not generate sufficient dispersion for hash table applications.
+  - Instead, the output often forms symmetric or repeating sequences, leading to more collisions than expected.
+
+### 5. Sensitivity to Table Size Growth
+Both methods benefit from increasing table size, but multiplicative hashing is more effectively.
+- With m = 37, multiplicative hashing achieves near-uniform distribution for both integers and strings.
+- Squared hashing also improves with a larger table size; however, its integer index distribution, while appearing more “random” at first glance, is still not evenly spread, certain index values appear more frequently, leading to subtle clustering and an uneven distribution across the table.
+- This shows that table size and hash function design must be considered together, since a larger m alone cannot fully compensate for structural weaknesses in the hashing method.
+  
+## Reflection
