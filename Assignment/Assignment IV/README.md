@@ -239,6 +239,6 @@ CXX\hash_function_cpp2.exe
 ```
 ### Result Snapshot
 #### Integer Output:
-![Integer Hash Output](./images/Integer.png)
+![Integer Hash Output](./Images/Integer.png)
 #### String Output:
-![String Hash Output](./images/String.png)
+![String Hash Output](./Images/String.png)
