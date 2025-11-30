@@ -4,7 +4,10 @@
    ========================================
 
    Description:
-    This file contains the hash functions for integer and string keys.
+    This file provides the implementations of hashing functions for integer
+    and string keys, using Knuth's multiplicative hashing method. These 
+    functions generate hash indices for use in hash table operations, and 
+    include basic error checking to ensure valid inputs.
 
    Development History:
     - 2025/11/23: Initialization

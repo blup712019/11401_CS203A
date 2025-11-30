@@ -4,7 +4,10 @@
    ========================================
 
    Description:
-    This file contains the hash functions for integer and string keys.
+    This file implements the hashing functions for integer and string keys
+    used in the hash table module. The hashing method applies a square
+    hashing approach, where both integer keys and the additive-sum form of 
+    string keys are squared and then reduced modulo m.
 
    Development History:
     - 2025/11/23: Initialization
