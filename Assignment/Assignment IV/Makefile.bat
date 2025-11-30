@@ -14,6 +14,10 @@ set C_SRCS=C\main.c C\hash_fn.c
 set C_OBJS=C\main.o C\hash_fn.o
 set C_BIN=C\hash_function.exe
 
+set C2_SRCS=C\main2.c C\hash_fn2.c
+set C2_OBJS=C\main2.o C\hash_fn2.o
+set C2_BIN=C\hash_function2.exe
+
 set CXX_SRCS=CXX\main.cpp CXX\hash_fn.cpp
 set CXX_OBJS=CXX\main.o CXX\hash_fn.o
 set CXX_BIN=CXX\hash_function_cpp.exe
@@ -39,6 +43,9 @@ echo Building C version...
 %CC% %CFLAGS% -c C\main.c -o C\main.o
 %CC% %CFLAGS% -c C\hash_fn.c -o C\hash_fn.o
 %CC% %CFLAGS% -o %C_BIN% %C_OBJS%
+%CC% %CFLAGS% -c C\main2.c -o C\main2.o
+%CC% %CFLAGS% -c C\hash_fn2.c -o C\hash_fn2.o
+%CC% %CFLAGS% -o %C2_BIN% %C2_OBJS%
 goto end
 
 :cxx
@@ -56,6 +63,7 @@ echo Cleaning...
 if exist C\*.o del C\*.o
 if exist CXX\*.o del CXX\*.o
 if exist %C_BIN% del %C_BIN%
+if exist %C2_BIN% del %C2_BIN%
 if exist %CXX_BIN% del %CXX_BIN%
 if exist %CXX2_BIN% del %CXX2_BIN%
 goto end
