@@ -225,3 +225,20 @@ Remove all compiled files:
 ```bash
 Makefile.bat clean
 ```
+### Execution
+After building, the executables appear inside the C or CXX directories.
+```bash
+# Run C version
+C\hash_function.exe
+
+# Run C++ version (multiplicative hashing)
+CXX\hash_function_cpp.exe
+
+# Run C++ version (squared hashing)
+CXX\hash_function_cpp2.exe
+```
+### Result Snapshot
+#### Integer Output:
+![Integer Hash Output](./images/Integer.png)
+#### String Output:
+![String Hash Output](./images/String.png)
