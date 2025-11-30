@@ -223,8 +223,11 @@ Makefile.bat cxx
 ### Execution
 After building, the executables appear inside the C or CXX directories.
 ```bash
-# Run C version
+# Run C version (multiplicative hashing)
 C\hash_function.exe
+
+# Run C version (squared hashing)
+C\hash_function2.exe
 
 # Run C++ version (multiplicative hashing)
 CXX\hash_function_cpp.exe
