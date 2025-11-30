@@ -57,6 +57,7 @@ if exist C\*.o del C\*.o
 if exist CXX\*.o del CXX\*.o
 if exist %C_BIN% del %C_BIN%
 if exist %CXX_BIN% del %CXX_BIN%
+if exist %CXX2_BIN% del %CXX2_BIN%
 goto end
 
 :usage

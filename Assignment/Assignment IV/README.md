@@ -139,9 +139,7 @@ The key idea is:
 ## Experimental Setup
 This project evaluates the behavior of two hash function designs under different table sizes and datasets.
 ### Table Sizes Tested (m)
-#### - 10
-#### - 11 (prime number)
-#### - 37 (prime number)
+#### - 10, 11 (prime number), 37 (prime number)
 ### Test Dataset
 #### Integer Keys
 ```test
@@ -152,4 +150,45 @@ This project evaluates the behavior of two hash function designs under different
 ```test
 "cat", "dog", "bat", "cow", "ant",
 "owl", "bee", "hen", "pig", "fox"
+```
+## Results
+### 1. Multiplicative Hashing:
+#### Integer Keys
+| Table Size (m) | Index Sequence                   | Observation                                                                        |
+| -------------- | -------------------------------- | ---------------------------------------------------------------------------------- |
+| **10**         | 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, …  | Pattern repeats every 10. Non-prime m causes modular cycling and strong linearity. |
+| **11**         | 1, 0, 10, 9, 8, 7, 6, 5, 4, 3, … | More uniform. Prime table size breaks the repeated patterns.                       |
+| **37**         | 5, 7, 9, 11, 13, 15, …           | Near-uniform distribution. Best spacing among all table sizes.                     |
+#### String Keys
+| Table Size (m) | Index Sequence (Representative) | Observation                                                         |
+| -------------- | ------------------------------- | ------------------------------------------------------------------- |
+| **10**         | 2, 4, 1, 9, 3, 8, 0, …          | Several collisions. Non-prime m creates clustering. |
+| **11**         | 7, 5, 8, 1, 7, 3, …             | Much more even spread. Fewer collisions due to prime m.             |
+| **37**         | 32, 36, 30, 29, 17, 10, …       | Very uniform. No collisions in this dataset.                        |
+### 2. Squared Hashing:
+#### Integer Keys
+| Table Size (m) | Index Sequence (Representative) | Observation                                                            |
+| -------------- | ------------------------------- | ---------------------------------------------------------------------- |
+| **10**         | 1, 4, 9, 6, 5, 6, 9, 4, 1, 0, … | Strong symmetry. Many repeated values -> high collisions. |
+| **11**         | 1, 0, 1, 4, 9, 5, 3, 3, 5, 9, … | Improved over m=10, but symmetry still causes clustering.              |
+| **37**         | 34, 3, 11, 21, 33, 10, 26, 7, … | Good spread but still less uniform than multiplicative hashing.        |
+#### String Keys
+| Table Size (m) | Index Sequence (Representative) | Observation                                                                                 |
+| -------------- | ------------------------------- | ------------------------------------------------------------------------------------------- |
+| **10**         | 4, 6, 1, 1, 9, 4, 0, …          | High collision rate                                         |
+| **11**         | 5, 3, 9, 1, 5, 9, …             | Some improvement, but collisions persist.                                                   |
+| **37**         | 34, 28, 3, 16, 26, 25, …        | Best distribution of the three table sizes, still not as uniform as multiplicative hashing. |
+
+## Compilation, build, execution and output
+### Compilation
+- The project uses a comprehensive Makefile.bat that builds both C and C++ versions with proper flags:
+```test
+# Build both C and C++ versions
+make all
+
+# Build only C version
+make c
+
+# Build only C++ version
+make cxx
 ```
