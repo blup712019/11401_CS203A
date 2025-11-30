@@ -49,3 +49,36 @@ This design multiplies the key by Knuth’s constant A = 2654435761 to spread ne
 The idea is to:
 - first spread nearby keys apart by multiplying with a large odd constant,
 - then fold the result back into [0, m - 1] via mod m.
+
+Pseudocode of String Keys
+```text
+  function myHashString(string key,int m)
+    if m <= 0 then
+        raise error "Table size m must be > 0"
+    end if
+
+    if str is empty then
+        raise error "String size must be > 0"
+    end if
+
+    unsigned hash = 0
+
+    for each character ch in str do
+        hash = hash + int(ch)  
+    end for
+
+    const A = 2654435761
+
+    hash = hash * A
+
+    index = hash mod m
+
+    return int(index)
+
+```
+#### Rationale
+The string is first reduced to a numeric value by summing character codes.Then multiplies the results by Knuth’s constant A = 2654435761 to spread nearby keys apart before applying mod m.
+The idea is to:
+- first reduce the string to a single numeric value
+- second spread nearby keys apart by multiplying with a large odd constant,
+- then fold the result back into [0, m - 1] via mod m.
