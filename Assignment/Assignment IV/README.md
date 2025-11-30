@@ -238,7 +238,23 @@ CXX\hash_function_cpp.exe
 CXX\hash_function_cpp2.exe
 ```
 ### Result Snapshot
-#### Integer Output:
-![Integer Hash Output](./Images/Integer.png)
-#### String Output:
-![String Hash Output](./Images/String.png)
+This section shows creenshots of the program output for both hash function designs:
+
+- Method 1: Multiplicative Hashing
+
+- Method 2: Squared Hashing
+
+### Method 1 — Multiplicative Hashing
+#### Integer Output（screenshot） :
+| <img src="./Images/IT1.png" width="300"/> | <img src="./Images/IT2.png" width="315"/> |<img src="./Images/IT3.png" width="305"/> |
+
+#### String Output（screenshot） :
+| <img src="./Images/ST1.png" width="300"/> | <img src="./Images/ST2.png" width="308"/> |<img src="./Images/ST3.png" width="305"/> |
+
+### Method 2 — Squared Hashing 
+#### Integer Output（screenshot） :
+| <img src="./Images/IT4.png" width="300"/> | <img src="./Images/IT5.png" width="315"/> |<img src="./Images/IT6.png" width="305"/> |
+
+#### String Output（screenshot） :
+| <img src="./Images/ST4.png" width="300"/> | <img src="./Images/ST5.png" width="320"/> |<img src="./Images/ST6.png" width="325"/> |
+
