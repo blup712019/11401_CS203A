@@ -26,7 +26,7 @@ Both designs share the same overall goal:
 - reduce clustering patterns,
 - and make it easier to compare how table size m affects the distribution of indices in different design.
 ### Design A: Multiplicative Hashing (Knuth’s Method)
-Pseudocode of Integer Keys
+### Pseudocode of Integer Keys
 ```text
 function myHashInt(int key,int m)
   if m <= 0 then
@@ -50,7 +50,7 @@ The idea is to:
 - first spread nearby keys apart by multiplying with a large odd constant,
 - then fold the result back into [0, m - 1] via mod m.
 
-Pseudocode of String Keys
+### Pseudocode of String Keys
 ```text
   function myHashString(string key,int m)
     if m <= 0 then
@@ -82,3 +82,6 @@ The idea is to:
 - first reduce the string to a single numeric value
 - second spread nearby keys apart by multiplying with a large odd constant,
 - then fold the result back into [0, m - 1] via mod m.
+
+### Design B: Squared Hashing
+This second design modifies the previous idea by applying a square operation before taking mod m. The goal is to see how an additional non-linear step affects the distribution.
