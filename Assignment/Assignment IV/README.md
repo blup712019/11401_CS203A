@@ -7,7 +7,7 @@ Email: Blup712019@gmail.com
 ## Environment
 This project is developed and executed on a Windows environment using the MinGW-W64 toolchain to compile both C and C++ implementations.
 The compiler versions used in this project are:
-```text
+```bash
   g++.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders) 14.3.0
   gcc.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders) 14.3.0
   ```
@@ -29,13 +29,13 @@ Both designs share the same overall goal:
 - and make it easier to compare how table size m affects the distribution of indices in different design.
 ### Design A: Multiplicative Hashing (Knuth’s Method)
 ### Pseudocode of Integer Keys
-```text
+```bash
 function myHashInt(int key,int m)
   if m <= 0 then
       return error "Table size m must be > 0"
   end if
 
-  const A = 2654435761  // Knuth's multiplicative constant
+  const A = 2654435761 
 
   unsigned long long hash = key;
 
@@ -44,6 +44,8 @@ function myHashInt(int key,int m)
   index = hash mod m
 
   return index
+
+end function
   ```
 #### Rationale
 This design multiplies the key by Knuth’s constant A = 2654435761 to spread nearby keys apart before applying mod m.
@@ -52,29 +54,30 @@ The idea is to:
 - then fold the result back into [0, m - 1] via mod m.
 
 ### Pseudocode of String Keys
-```text
-  function myHashString(string key,int m)
-    if m <= 0 then
-        raise error "Table size m must be > 0"
-    end if
+```bash
+function myHashString(string key,int m)
+  if m <= 0 then
+    raise error "Table size m must be > 0"
+  end if
 
-    if str is empty then
-        raise error "String size must be > 0"
-    end if
+  if str is empty then
+    raise error "String size must be > 0"
+  end if
 
-    unsigned hash = 0
+  unsigned hash = 0
 
-    for each character ch in str do
-        hash = hash + int(ch)  
-    end for
+  for each character ch in str do
+      hash = hash + int(ch)  
+  end for
 
-    const A = 2654435761
+  const A = 2654435761
 
-    hash = hash * A
+  hash = hash * A
 
-    index = hash mod m
+  index = hash mod m
 
-    return int(index)
+   return int(index)
+end function
 ```
 #### Rationale
 The string is first reduced to a numeric value by summing character codes.Then multiplies the results by Knuth’s constant A = 2654435761 to spread nearby keys apart before applying mod m.
@@ -86,7 +89,7 @@ The idea is to:
 ### Design B: Squared Hashing
 This second design modifies the previous idea by applying a square operation before taking mod m. The goal is to see how an additional non-linear step affects the distribution.
 ### Pseudocode of Integer Keys
-```text
+```bash
 function myHashInt(int key,int m)
   if m <= 0 then
       return error "Table size m must be > 0"
@@ -99,6 +102,7 @@ function myHashInt(int key,int m)
   index = hash mod m
 
   return index
+end function
   ```
 #### Rationale
 This method uses h(k) = k² mod m to introduce a nonlinear transformation.
@@ -107,7 +111,7 @@ The key idea is:
 - then apply mod m to map them into the table.
 
 ### Pseudocode of String Keys
-```text
+```bash
   function myHashString(string key,int m)
     if m <= 0 then
         raise error "Table size m must be > 0"
@@ -128,6 +132,7 @@ The key idea is:
     index = hash mod m
 
     return int(index)
+end function
 ```
 #### Rationale
 The string is first reduced to a numeric value by summing character codes.Then use h(k) = k² mod m to introduce a nonlinear transformation.
@@ -180,15 +185,43 @@ This project evaluates the behavior of two hash function designs under different
 | **37**         | 34, 28, 3, 16, 26, 25, …        | Best distribution of the three table sizes, still not as uniform as multiplicative hashing. |
 
 ## Compilation, build, execution and output
-### Compilation
-- The project uses a comprehensive Makefile.bat that builds both C and C++ versions with proper flags:
+### Folder Structure :
 ```test
-# Build both C and C++ versions
-make all
+Assignment IV/
+│── Makefile.bat          # Windows batch build script
+│── README.md
+│── README_template.md
+│── VSCode.md
+│
+├── C/                    # C implementation
+│    ├── main.c
+│    ├── hash_fn.c
+│    └── hash_fn.h
+│
+└── CXX/                  # C++ implementation
+     ├── main.cpp         # Multiplicative hashing
+     ├── hash_fn.cpp
+     ├── hash_fn.hpp
+     ├── main2.cpp        # Squared hashing
+     ├── hash_fn2.cpp
+     └── hash_fn2.hpp
+
+```
+### Compilation
+This project uses a Windows batch-based Makefile system (Makefile.bat).
+All commands must be executed in the root folder Assignment IV/, in CMD.  
+```bash
+# Build both C and C++ versions 
+Makefile.bat all
 
 # Build only C version
-make c
+Makefile.bat c
 
 # Build only C++ version
-make cxx
+Makefile.bat cxx
+```
+### Clean Build Files
+Remove all compiled files:
+```bash
+Makefile.bat clean
 ```
