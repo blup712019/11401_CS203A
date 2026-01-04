@@ -146,3 +146,153 @@
 - Prime `m`：較能抵抗某些 hash 偏差（分佈風險較低）
 - Power-of-two `m`：可用 bitmask（更快）
   - 但要求 hash 的低位品質要好（需 bit mixing），否則容易偏槽。
+
+# 4. Complexity
+
+## 記號
+- `n`：元素數量
+- `m`：bucket/slot 數量（table 容量）
+- `α = n / m`：load factor（平均擁擠程度）
+
+## 時間複雜度（Expected vs Worst-case）
+### Insert / Lookup / Delete
+- **Expected**：在 hash 分佈均勻、且 `α` 被控制住時 → 期望 `O(1)`
+  - Chaining 更精準：`O(1 + α)`（桶內平均長度是 α）
+  - Open addressing：在安全 α 下 probe 次數可維持常數
+- **Worst-case**：可能退化成 `O(n)`
+  - 例：大量 key 撞在同桶、或 probe chain 超長
+
+### Traversal（遍歷）
+- 走訪所有元素：`O(n)`
+- 通常 **不保證順序**
+
+### Resize / Rehash
+- 單次 rehash：需要重分配 `n` 個元素 → `O(n)`
+- 但整體插入可做到 **amortized `O(1)`**
+
+## Amortized O(1)（攤提直覺）
+- 常見做法：容量幾何成長（例如 `m *= 2`）
+- 多次擴容的搬運總量：`1 + 2 + 4 + ... + n < 2n`
+  - 做了 n 次插入，總搬運仍是 `O(n)` → 平均每次插入 `O(1)`
+- 實務提醒：rehash 會造成 **latency spike**（單次尖峰），即使攤提很便宜
+
+## 空間複雜度（Big-O + 實務重點）
+### Separate Chaining
+- 空間：`O(m + n)`
+  - m = bucket array，n = entries（含節點/指標等）
+- 實務：linked list 有 pointer / allocation overhead，cache locality 較差
+
+### Open Addressing
+- 空間：`O(m)`；若 `α` 有界則 `m = Θ(n)` → 整體 `O(n)`
+- 實務：必須保留空槽維持低 α（例如 α=0.7 代表槽位約需 1.43n）
+# 5. Abstract Data Type
+
+雜湊表 ADT 通常支援以下操作：
+
+### 操作與時間複雜度
+
+- **插入 / Put（Insert / Put）**：新增一組 `(key, value)`。若 key 已存在，則更新其 value。  
+  - 期望時間複雜度：`O(1)`  
+  - 最壞情況：`O(n)`
+
+- **查找 / Get（Lookup / Get）**：取得 key 對應的 value（或回報不存在）。  
+  - 期望時間複雜度：`O(1)`  
+  - 最壞情況：`O(n)`
+
+- **更新（Update）**：修改已存在 key 的 value。  
+  - 期望時間複雜度：`O(1)`  
+  - 最壞情況：`O(n)`
+
+- **刪除 / Remove（Delete / Remove）**：若 key 存在，移除該筆資料。  
+  - 期望時間複雜度：`O(1)`  
+  - 最壞情況：`O(n)`
+
+- **包含判斷（Contains）**：測試某個 key 是否存在。  
+  - 期望時間複雜度：`O(1)`  
+  - 最壞情況：`O(n)`
+
+- **遍歷 / 迭代（Traversal / Iteration）**：走訪所有 `(key, value)`（順序通常不保證）。  
+  - 時間複雜度：`O(n)`
+
+- **擴容 / 重雜湊（Resize / Rehash）**：在維持載入因子（load factor）於合理範圍時，重建表格並調整容量。  
+  - 時間複雜度：`O(n)`
+
+# 6. Pros & Cons
+
+## Pros（優點）
+- **期望很快**：在 hash 分佈均勻、load factor 控制良好時，查/插/刪多為 expected `O(1)`。
+- **Key 很彈性**：string / number / struct 只要能 hash 就能當 key。
+  - 但要注意：`a == b` 必須 ⇒ `hash(a) == hash(b)`（hash 與 equality 要一致）。
+- **適合的典型用途**
+  - Membership test：`contains(x)`（去重、visited、白名單/黑名單）
+  - Dictionary / indexing：`get(key)`（索引、cache、符號表）
+  - Counting / aggregation：`count[x]++`（字頻、統計、log 聚合）
+
+
+## Cons（缺點 / 風險）
+- **Worst-case 可能退化到 `O(n)`**
+  - 碰撞大量集中（hash 不佳、key 分佈偏、甚至惡意 keys）
+  - 常見問題不是平均變慢，而是 **tail latency（P95/P99）變差**。
+- **Resize / Rehash 造成延遲尖峰**
+  - 單次 rehash 需要搬動所有元素 → 當下 `O(n)`（即使 amortized 仍好看）
+  - 緩解方向：預估容量先 reserve、或用漸進式 rehash（視實作而定）
+- **通常不保證順序**
+  - 遍歷不等於排序；不適合 range query / min-max 這類需求
+  - 若要順序：用 balanced BST / skip list / B-tree，或 LinkedHashMap 類型結構
+- **Open Addressing 刪除更複雜**
+  - 需要 tombstone（墓碑）避免斷 probe chain
+  - 墓碑累積會拖慢 probe → 需定期 rehash 清理
+  - probing 也可能有 clustering（線性/二次探測的集中問題）
+- **需要調參與假設**
+  - hash function 品質、load factor 門檻、碰撞策略（chaining vs open addressing）
+  - 若無法控制輸入分佈（對外服務）要特別小心碰撞攻擊/偏差
+
+
+## 什麼時候該用 / 不該用
+### 適合
+- 主要操作是 `get/put/contains/remove`
+- 不需要排序或範圍查詢
+- 能接受偶爾的 rehash（或可預估容量）
+
+### 不適合（或要謹慎）
+- 需要有序遍歷 / range query / predecessor/successor
+- 對 tail latency 極敏感且輸入分佈不可控
+- 大量刪除 + open addressing（墓碑管理成本高）
+
+# 7. Variations of Hash
+
+
+
+### 1) Robin Hood Hashing（開放定址變體）
+- 插入時「probe 距離遠者優先」（把比較近家的元素往後擠）。
+- 目標：降低 probe 長度的變異 → **尾延遲更穩**（更可預測）。
+- 常搭配 backward-shift deletion 減少 tombstone 依賴。
+
+### 2) Cuckoo Hashing（布穀鳥）
+- 多個 hash function；每個 key 有少數候選位置（常見 2 個）。
+- Lookup：檢查固定少數槽位 → **worst-case 常數次檢查**（很穩）。
+- Insert：可能連鎖踢出（eviction），遇 cycle 需 rebuild/rehash（常設 kick limit / stash）。
+
+### 3) Hopscotch Hashing（跳房子）
+- 維持不變量：每個 key 需落在 home bucket 的「鄰域窗口」內（neighborhood）。
+- 透過局部搬移把空槽「拉近」，讓 key 留在 home 附近。
+- 好處：查找只看小鄰域、cache-friendly；高負載下也常更穩（但實作複雜）。
+
+### 4) Dynamic / Resizing Hash Table（動態擴縮）
+- `α` 超門檻就 grow（常 ×2）→ rehash `O(n)`，但插入可 amortized `O(1)`。
+- 設計重點是策略：
+  - grow/shrink 門檻（含 hysteresis 避免抖動）
+  - 一次性 rehash vs 漸進式 rehash（減少 latency spike）
+
+### 5) Perfect Hashing（完美雜湊，靜態集合）
+- 針對「固定 key set」建構無碰撞映射 → lookup worst-case `O(1)` 很穩。
+- 限制：集合一變動，建表可能要重來。
+- 常用在：只讀字典、compiler keywords、常數表。
+
+### 6) Extendible / Linear Hashing（外部記憶體友善）
+- 目的：在磁碟/DB 情境避免「全表 rehash」的巨量 I/O。
+- 特色：**增量分裂桶**（局部成長），逐步擴容。
+  - Extendible：directory 指向 buckets，滿了就 split 並局部更新
+  - Linear：按順序逐桶 split，漸進擴展
+
+  
