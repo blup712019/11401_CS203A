@@ -154,7 +154,7 @@
 ---
 
 ## 7. 常見複雜度等級與直覺
-![常見時間複雜度比較圖](static\image.png)
+![常見時間複雜度比較圖](static/image.png)
 *Reference*: [Click here](https://andyli.tw/time-complexity/)
 | 等級 | 直覺 | 常見例子 |
 |---|---|---|
